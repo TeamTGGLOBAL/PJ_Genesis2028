@@ -1,0 +1,37 @@
+name: Auto Create Pull Request
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat: Update from develop branch"
+          title: "feat: Add TG Global Knowledge Base updates"
+          body: |
+            ## レビュー依頼
+            
+            **レビュー担当者各位**
+            
+            経済学の基本概念「機会費用」について、更新されたコンテンツをレビューしてください。
+            
+            ### ＜レビューで確認してほしい観点＞
+            - **明確さ**: 説明は分かりやすいか？専門用語が多すぎないか？
+            - **具体性**: TG GLOBALの事業に即した具体例は、現実的で示唆に富んでいるか？
+            - **網羅性**: この概念を理解する上で、他に加えるべき重要な視点はあるか？
+            
+            GitHubのコメント機能で、ご意見や修正案をお知らせください。
+          base: main
+          head: develop
+          draft: false
